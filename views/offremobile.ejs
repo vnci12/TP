@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Offres Mobiles</title>
+</head>
+<body>
+    <!-- appel de la navbar -->
+    <%- include('navbar') %>
+
+
+    <h1>Offres Mobiles</h1>
+
+    <p>Découvrez nos offres mobiles adaptées à vos besoins :</p>
+
+    <% resultOffresMobiles.forEach(result { %>
+        <div class="offer">
+            <h2><%= offer.nom %></h2>
+            <p><%= offer.description %></p>
+            <p>Prix : <%= offer.prix %> €</p>
+        </div>
+</body>
+</html>
