@@ -1,0 +1,46 @@
+/* Couleurs dynamiques avec variables CSS */
+:root {
+	--primary-color: #3498db;
+	--secondary-color: #2ecc71;
+	--accent-color: #e67e22;
+	--background-color: #f4f4f4;
+	--text-color: #222;
+}
+
+body {
+	background: var(--background-color);
+	color: var(--text-color);
+	font-family: Arial, sans-serif;
+	margin: 0;
+	padding: 0;
+}
+
+.header, header {
+	background: var(--primary-color);
+	color: #fff;
+	padding: 1rem;
+	text-align: center;
+}
+
+.btn, button {
+	background: var(--secondary-color);
+	color: #fff;
+	border: none;
+	padding: 0.7rem 1.5rem;
+	border-radius: 4px;
+	cursor: pointer;
+	transition: background 0.3s, color 0.3s;
+}
+.btn:hover, button:hover {
+	background: var(--accent-color);
+	color: #fff;
+}
+
+a {
+	color: var(--primary-color);
+	text-decoration: none;
+	transition: color 0.3s;
+}
+a:hover {
+	color: var(--accent-color);
+}

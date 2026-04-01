@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panier</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <!-- appel de la navbar -->
+    <%- include('navbar') %>
+
+    <h1>Votre Panier</h1>
+    <% if (typeof panier !== 'undefined' && panier.length > 0) { %>
+        <table style="width:100%;max-width:700px;margin:auto;border-collapse:collapse;">
+            <thead>
+                <tr>
+                    <th>Image</th>
+                    <th>Nom</th>
+                    <th>Marque</th>
+                    <th>Modèle</th>
+                    <th>Prix</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% panier.forEach(item => { %>
+                    <form action="/api/telephone" method="post">
+                        <input type="hidden" name="telephone_id" value="<%= item.id %>">
+                    </form>
+                    <tr>
+                        <td><img src="<%= item.image_url %>" alt="<%= item.nom %>" style="width:60px;"></td>
+                        <td><%= item.nom %></td>
+                        <td><%= item.marque %></td>
+                        <td><%= item.modele %></td>
+                        <td><%= item.prix %> €</td>
+                    </tr>
+                <% }) %>
+            </tbody>
+        </table>
+    <% } else { %>
+        <p>Votre panier est actuellement vide. Ajoutez des offres mobiles ou des téléphones pour les voir ici.</p>
+    <% } %>
+</body>
+</html>

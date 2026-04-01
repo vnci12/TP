@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Offres Mobiles</title>
+    <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
     <!-- appel de la navbar -->
@@ -12,13 +13,19 @@
 
     <h1>Offres Mobiles</h1>
 
-    <p>Découvrez nos offres mobiles adaptées à vos besoins :</p>
+    <h3>Découvrez nos offres mobiles adaptées à vos besoins :</h3>
 
-    <% resultOffresMobiles.forEach(result { %>
-        <div class="offer">
-            <h2><%= offer.nom %></h2>
-            <p><%= offer.description %></p>
-            <p>Prix : <%= offer.prix %> €</p>
+    <% resultatOffreMobile.forEach(resultat => { %>
+        <div class="card">
+            <h2><%= resultat.nom %></h2>
+            <p><%= resultat.data_incluse %> Go</p>
+            <p><%= resultat.appels_sms_inclus %> appels et SMS inclus</p>
+            <p>Prix : <%= resultat.prix %> €</p>
+
+            <input type="button" value="Ajouter au panier" onclick="alert('Offre mobile ajoutée au panier !')">
         </div>
+    <% }); %>
+
+
 </body>
 </html>

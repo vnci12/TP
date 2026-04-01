@@ -4,11 +4,45 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Télèphone</title>
+    <link rel="stylesheet" href="/css/style.css">
 </head>
 
 <body>
     <%- include('navbar') %>
     <h1>Nos Téléphone</h1>
 
+
+    <!-- Modal pour choisir la commande -->
+    <div id="myModal" class="modal" style="display:none;">
+        <div class="modal-header">
+            <span class="close">&times;</span>
+            <h2 id="modalTitle">Choisir ma commande</h2>
+        </div>
+        <div class="modal-body">
+            <div id="modalContent">
+                <!-- Contenu dynamique JS -->
+            </div>
+            <button id="addToCartBtn">Ajouter au panier</button>
+        </div>
+    </div>
+
+    <h4>Découvrez notre sélection de téléphones mobiles :</h4>
+    <% resultatTelephone.forEach(resultat => { %>
+        <div class="card">
+            <img src="<%= resultat.image_url %>" alt="<%= resultat.nom %>" class="phone-image">
+            <h2><%= resultat.nom %></h2>
+            <p>Marque : <%= resultat.marque %></p>
+            <p>Modèle : <%= resultat.modele %></p>
+            <p>Prix : <%= resultat.prix %> €</p>
+            <button class="open-modal-btn" 
+                data-nom="<%= resultat.nom %>" 
+                data-marque="<%= resultat.marque %>" 
+                data-modele="<%= resultat.modele %>" 
+                data-prix="<%= resultat.prix %>">
+                Choisir & Ajouter au panier
+            </button>
+        </div>
+    <% }) %>
 </body>
+<script src="/JS/modal.js"></script>
 </html>

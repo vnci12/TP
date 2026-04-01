@@ -78,3 +78,17 @@ CREATE TABLE client (
 INSERT INTO client (nom, prenom, numero_identite, date_naissance, adress_postale, email)
 VALUES
 ('Doe', 'John', '123456789', '1990-01-01', '123 Main St, Anytown, USA', 'john.doe@example.com');
+
+
+
+--création de la table panier
+CREATE TABLE panier (
+    id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    client_id INT NOT NULL,
+    telephone_id INT NOT NULL,
+    offre_mobile_id INT NOT NULL,
+    date_ajout TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (client_id) REFERENCES client(id),
+    FOREIGN KEY (telephone_id) REFERENCES telephone(id),
+    FOREIGN KEY (offre_mobile_id) REFERENCES offre_mobile(id)
+);
