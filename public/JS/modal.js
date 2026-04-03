@@ -34,12 +34,27 @@ window.onclick = function(event) {
     if (event.target == modal) {
         modal.style.display = "none";
     }
-}
+};
 
-// Ajoute au panier (exemple : affichage d'une alerte, à remplacer par logique réelle)
-addToCartBtn.onclick = function() {
+
+
+//function pour recupérer les données du téléphone sélectionné et les envoyer au serveur pour les ajouter au panier
+addToCartBtn.addEventListener('click', function() {
     if (selectedPhone) {
-        alert(`${selectedPhone.nom} ajouté au panier !`);
-        modal.style.display = "none";
+        fetch('/api/panier/add', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(selectedPhone)
+        })
+        .then(response => response.json())
+        .then(data => {
+            alert(`${selectedPhone.nom} ajouté au panier !`);
+            modal.style.display = "none";
+        })
+        .catch(error => {
+            console.error('Erreur lors de l\'ajout au panier :', error);
+        });
     }
-}
+});

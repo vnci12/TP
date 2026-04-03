@@ -30,16 +30,15 @@
     <% resultatTelephone.forEach(resultat => { %>
         <div class="card">
             <img src="<%= resultat.image_url %>" alt="<%= resultat.nom %>" class="phone-image">
-            <h2><%= resultat.nom %></h2>
             <p>Marque : <%= resultat.marque %></p>
             <p>Modèle : <%= resultat.modele %></p>
             <p>Prix : <%= resultat.prix %> €</p>
             <button class="open-modal-btn" 
-                data-nom="<%= resultat.nom %>" 
                 data-marque="<%= resultat.marque %>" 
                 data-modele="<%= resultat.modele %>" 
-                data-prix="<%= resultat.prix %>">
-                Choisir & Ajouter au panier
+                data-prix="<%= resultat.prix %>"
+                data-nom="<%= resultat.nom ? resultat.nom : (resultat.marque + ' ' + resultat.modele) %>">
+                Choisir
             </button>
         </div>
     <% }) %>

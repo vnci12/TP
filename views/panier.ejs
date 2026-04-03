@@ -11,34 +11,31 @@
     <%- include('navbar') %>
 
     <h1>Votre Panier</h1>
-    <% if (typeof panier !== 'undefined' && panier.length > 0) { %>
-        <table style="width:100%;max-width:700px;margin:auto;border-collapse:collapse;">
-            <thead>
-                <tr>
-                    <th>Image</th>
-                    <th>Nom</th>
-                    <th>Marque</th>
-                    <th>Modèle</th>
-                    <th>Prix</th>
-                </tr>
-            </thead>
-            <tbody>
-                <% panier.forEach(item => { %>
-                    <form action="/api/telephone" method="post">
-                        <input type="hidden" name="telephone_id" value="<%= item.id %>">
-                    </form>
-                    <tr>
-                        <td><img src="<%= item.image_url %>" alt="<%= item.nom %>" style="width:60px;"></td>
-                        <td><%= item.nom %></td>
-                        <td><%= item.marque %></td>
-                        <td><%= item.modele %></td>
-                        <td><%= item.prix %> €</td>
-                    </tr>
-                <% }) %>
-            </tbody>
-        </table>
-    <% } else { %>
-        <p>Votre panier est actuellement vide. Ajoutez des offres mobiles ou des téléphones pour les voir ici.</p>
-    <% } %>
+        <div class="container-panier">
+            <div class="panier-container">
+                <% if (resultatPanier.length > 0) { %>
+                    <% resultatPanier.forEach(resultat => { %>
+                        <div class="card-panier">
+                            <% if (resultat.nom) { %>
+                                <p><strong>Offre :</strong> <%= resultat.nom %></p>
+                                <p><strong>Data incluse :</strong> <%= resultat.data_incluse %> Go</p>
+                                <p><strong>Appels/SMS inclus :</strong> <%= resultat.appels_sms_inclus %></p>
+                            <% } %>
+                            <% if (resultat.marque) { %>
+                                <p><strong>Marque :</strong> <%= resultat.marque %></p>
+                            <% } %>
+                            <% if (resultat.modele) { %>
+                                <p><strong>Modèle :</strong> <%= resultat.modele %></p>
+                            <% } %>
+                            <p><strong>Prix :</strong> <%= resultat.prix %> €</p>
+                            <input type="button" value="Supprimer" onclick="supprimerPanier('<%= resultat.id %>')">
+                        </div>
+                    <% }) %>
+                <% } else { %>
+                    <p>Votre panier est actuellement vide. Ajoutez des offres mobiles ou des téléphones pour les voir ici.</p>
+                <% } %>
+            </div>
+        </div>
 </body>
+<script src="/JS/panier.js"></script>
 </html>

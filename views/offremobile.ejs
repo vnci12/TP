@@ -22,7 +22,14 @@
             <p><%= resultat.appels_sms_inclus %> appels et SMS inclus</p>
             <p>Prix : <%= resultat.prix %> €</p>
 
-            <input type="button" value="Ajouter au panier" onclick="alert('Offre mobile ajoutée au panier !')">
+            <button class="add-offre-panier-btn"
+                data-nom="<%= resultat.nom %>"
+                data-data_incluse="<%= resultat.data_incluse %>"
+                data-appels_sms_inclus="<%= resultat.appels_sms_inclus %>"
+                data-prix="<%= resultat.prix %>"
+            >
+                Ajouter au panier
+            </button>
         </div>
     <% }); %>
 

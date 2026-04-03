@@ -91,6 +91,37 @@ app.get('/api/offremobile', (req, res) => {
         }
     });
 });
+// Route POST pour ajouter une offre mobile au panier et afficher le panier
+app.post('/api/offremobile', (req, res) => {
+    console.log('Requête POST reçue pour /api/offremobile');
+    const data = req.body;
+    req.getConnection((erreur, connection) => {
+        if (erreur) {
+            console.log('Erreur de connexion à la base de données : ', erreur);
+            return res.status(500).json({ message: "Erreur de connexion à la base de données." });
+        }
+        // Insertion de l'offre mobile dans le panier
+        const requeteSQL = "INSERT INTO panier (nom, data_incluse, appels_sms_inclus, prix) VALUES (?, ?, ?, ?)";
+        const valeurs = [data.nom, data.data_incluse, data.appels_sms_inclus, data.prix];
+        connection.query(requeteSQL, valeurs, (err, result) => {
+            if (err) {
+                console.log('Erreur lors de l\'ajout au panier : ', err);
+                return res.status(500).json({ message: "Erreur lors de l'ajout au panier." });
+            }
+            // Après ajout, on récupère le panier et on l'affiche
+            connection.query("SELECT * FROM panier", (err2, resultatPanier) => {
+                if (err2) {
+                    console.log('Erreur lors de la récupération du panier : ', err2);
+                    return res.status(500).json({ message: "Erreur lors de la récupération du panier." });
+                }
+                res.render('panier', { resultatPanier });
+            });
+        });
+    });
+});
+
+
+
 
 
 
@@ -145,19 +176,85 @@ app.get('/api/contact', (req, res) => {
 
 //route GET pour l'API panier (/api/panier) qui rend la vue "panier.ejs".
 app.get('/api/panier', (req, res) => {
-    console.log('Requête GET reçue pour /api/panier');
-
-    res.render('panier');
+    console.log('Requête reçue sur /api/panier');
+    //je me connecte à la base de données pour récupérer les offres mobiles
+    req.getConnection((erreur, connection) => {
+        if(erreur) {
+            //je vérifie s'il y a une erreur lors de la connexion à la base de donnée
+            console.log('Erreur de connexion à la base de données : ', erreur);
+        } else {
+            //je prépare la requête SQL pour récupérer les offres mobiles
+            const requeteSQL = "SELECT * FROM panier";
+            //je exécute la requête SQL pour récupérer les offres mobiles
+            connection.query(requeteSQL, (err, resultatPanier) => {
+                if(err) {
+                    console.log('Erreur lors de la récupération du panier : ', err);
+                    res.status(500).json({ message: "Erreur lors de la récupération du panier." });
+                } else {
+                    console.log('Offres mobiles récupérées avec succès !');
+                    res.render('panier', { resultatPanier });
+                }
+            });
+        }
+    });
 });
 
 //mhethode poste pour recuperer les information et les ajouter au panier
 app.post('/api/panier/add', (req, res) => {
     console.log('Requête POST reçue pour /api/panier/add');
-    const { nom, marque, modele, prix, telephone_id } = req.body;
-    console.log('Données reçues : ', { nom, marque, modele, prix, telephone_id });
-    // Ici, vous pouvez ajouter la logique pour stocker les données dans une base de données ou une session
-    res.json({ message: `${nom} ajouté au panier !` });
+    const data = req.body;
+    console.log('Données reçues : ', data);
+    req.getConnection((erreur, connection) => {
+        if (erreur) {
+            console.log('Erreur de connexion à la base de données : ', erreur);
+            return res.status(500).json({ message: "Erreur de connexion à la base de données." });
+        }
+        let requeteSQL = '';
+        let valeurs = [];
+        // Détection du type d'ajout (offre mobile ou téléphone)
+        if (data.nom && data.data_incluse && data.appels_sms_inclus) {
+            // Offre mobile
+            requeteSQL = "INSERT INTO panier (nom, data_incluse, appels_sms_inclus, prix) VALUES (?, ?, ?, ?)";
+            valeurs = [data.nom, data.data_incluse, data.appels_sms_inclus, data.prix];
+        } else if (data.marque && data.modele) {
+            // Téléphone
+            requeteSQL = "INSERT INTO panier (marque, modele, prix) VALUES (?, ?, ?)";
+            valeurs = [data.marque, data.modele, data.prix];
+        } else {
+            return res.status(400).json({ message: "Données invalides pour l'ajout au panier." });
+        }
+        connection.query(requeteSQL, valeurs, (err, result) => {
+            if (err) {
+                console.log('Erreur lors de l\'ajout au panier : ', err);
+                return res.status(500).json({ message: "Erreur lors de l'ajout au panier." });
+            }
+            res.json({ message: "Ajouté au panier !" });
+        });
+    });
 });
+
+//methode delete pour supprimer un élément du panier
+app.delete('/api/panier/remove/:id', (req, res) => {
+    console.log('Requête DELETE reçue pour /api/panier/remove/:id');
+    const id = req.params.id;
+
+    req.getConnection((erreur, connection) => {
+        if (erreur) {
+            console.log('Erreur de connexion à la base de données : ', erreur);
+            return res.status(500).json({ message: "Erreur de connexion à la base de données." });
+        }
+
+        const requeteSQL = "DELETE FROM panier WHERE id = ?";
+        connection.query(requeteSQL, [id], (err, result) => {
+            if (err) {
+                console.log('Erreur lors de la suppression du panier : ', err);
+                return res.status(500).json({ message: "Erreur lors de la suppression du panier." });
+            }
+            res.json({ message: "Élément supprimé du panier !" });
+        });
+    });
+});
+
 
 
 

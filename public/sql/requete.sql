@@ -84,11 +84,19 @@ VALUES
 --création de la table panier
 CREATE TABLE panier (
     id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
-    client_id INT NOT NULL,
-    telephone_id INT NOT NULL,
-    offre_mobile_id INT NOT NULL,
+    telephone_id INT NULL,
+    offre_mobile_id INT NULL,
+    nom VARCHAR(255),
+    marque VARCHAR(255),
+    modele VARCHAR(255),
+    data_incluse INT,
+    appels_sms_inclus TEXT,
+    prix DECIMAL(10, 2) NOT NULL,
     date_ajout TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (client_id) REFERENCES client(id),
     FOREIGN KEY (telephone_id) REFERENCES telephone(id),
     FOREIGN KEY (offre_mobile_id) REFERENCES offre_mobile(id)
 );
+
+--insertion de données dans la table panier
+INSERT INTO panier (client_id, telephone_id, offre_mobile_id) VALUES (1, 1, 1);
+
