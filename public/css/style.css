@@ -118,3 +118,15 @@ body::before {
     background-position: center center;
     opacity: 0.35; /* Ajuste la transparence ici */
 }
+
+#accueil {
+    background-color: #388e3c;
+    color: #fff;
+    border: none;
+    padding: 10px 24px;
+    border-radius: 6px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: 0.2s;
+    position: center;
+}
