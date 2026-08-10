@@ -58,3 +58,16 @@ addToCartBtn.addEventListener('click', function() {
         });
     }
 });
+
+//formulaire pour ajouter une offre au panier depuis le modal
+addToCartBtn.addEventListener('click', function() {
+    if (selectedPhone) {
+        const offre = {
+            nom: selectedPhone.nom,
+            marque: selectedPhone.marque,
+            modele: selectedPhone.modele,
+            prix: selectedPhone.prix
+        };
+        // Envoyer l'offre au serveur pour l'ajouter au panier
+    }
+});
