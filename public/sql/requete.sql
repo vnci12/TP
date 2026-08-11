@@ -20,17 +20,14 @@ VALUES
 
 INSERT INTO offre_mobile (nom, prix, data_incluse, appels_sms_inclus)
 VALUES
-('Offre Baraka', 29.99, 150, "Appel et SMS ilimité en France métropolitaine, Mayotte et Reunion");
+('Offre Baraka', 29.99, 150, "Appel et SMS illimité en France métropolitaine, Mayotte et Reunion");
 
-INSERT INTO offre_mobiles (nom, prix, data_incluse, appels_sms_inclus)
-VALUES
-('Offre C', 39.99, 200, "Appel et SMS ilimité en France métropolitaine, Mayotte et Reunion");
 INSERT INTO offre_mobile (nom, prix, data_incluse, appels_sms_inclus)
 VALUES
-('Offre C', 39.99, 200, "Appel et SMS ilimité en France métropolitaine, Mayotte et Reunion");
+('Offre C', 39.99, 200, "Appel et SMS illimité en France métropolitaine, Mayotte et Reunion");
 INSERT INTO offre_mobile (nom, prix, data_incluse, appels_sms_inclus)
 VALUES
-('Offre D', 49.99, 300, "Appel et SMS ilimité en France métropolitaine, Mayotte et Reunion");
+('Offre D', 49.99, 300, "Appel et SMS illimité en France métropolitaine, Mayotte et Reunion");
 
 --création de la table telephone
 CREATE TABLE telephone (
@@ -86,6 +83,7 @@ CREATE TABLE panier (
     id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
     telephone_id INT NULL,
     offre_mobile_id INT NULL,
+    client_id INT NULL,
     nom VARCHAR(255),
     marque VARCHAR(255),
     modele VARCHAR(255),
@@ -94,7 +92,8 @@ CREATE TABLE panier (
     prix DECIMAL(10, 2) NOT NULL,
     date_ajout TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (telephone_id) REFERENCES telephone(id),
-    FOREIGN KEY (offre_mobile_id) REFERENCES offre_mobile(id)
+    FOREIGN KEY (offre_mobile_id) REFERENCES offre_mobile(id),
+    FOREIGN KEY (client_id) REFERENCES client(id)
 );
 
 --insertion de données dans la table panier
